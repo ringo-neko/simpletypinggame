@@ -9,8 +9,8 @@ window.onload = function() {
 
   const hardmode=true;
 
-  const r=hardmode? /\[[^\[\]]+\]/:/\([^\(\)]+\)/
-  const r2=hardmode? /[\[\]]/:/[\(\)]/
+  const r=hardmode? /\[[^\[\]]+\]/g:/\([^\(\)]+\)/g
+  const r2=hardmode? /[\[\]]/g:/[\(\)]/g
   let progress=0
   let hiragana=[];
   let kanji=[];
