@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+window.onload = function() {
+
+  const hardmode=true;
+
+  const r=hardmode? /\[[^\[\]]+\]/:/\([^\(\)]+\)/
+  const r2=hardmode? /[\[\]]/:/[\(\)]/
+  let progress=0
+  let hiragana=[];
+  let kanji=[];
+  const hiaganafileinput = document.getElementById('hiragana');
+  hiaganafileinput.addEventListener('change', (event) => {
+    const file = event.target.files[0]; // 選択されたファイルオブジェクトを取得
+    const reader = new FileReader(); // FileReaderオブジェクトをインスタンス化
+    reader.onload = (e) => {
+      const fileContent = e.target.result; // ファイルの中身
+      hiragana=fileContent.replace(r, "").replace(r2, "").split("\n"); // ファイルの中身をコンソールに表示
+      // ここでファイルの内容を加工・表示するなどの処理を行う
+    };
+    reader.readAsText(file); // ファイルをテキストとして読み込む
+  });
+  const kanjifileinput = document.getElementById('kanji');
+  kanjifileinput.addEventListener('change', (event) => {
+    const file = event.target.files[0]; // 選択されたファイルオブジェクトを取得
+    const reader = new FileReader(); // FileReaderオブジェクトをインスタンス化
+    reader.onload = (e) => {
+      const fileContent = e.target.result; // ファイルの中身
+      kanji=fileContent.replace(r, "").replace(r2, "").split("\n"); // ファイルの中身をコンソールに表示
+      // ここでファイルの内容を加工・表示するなどの処理を行う
+    };
+    reader.readAsText(file); // ファイルをテキストとして読み込む
+  });
+
+
+
+
+
+
+
+
+  document.getElementById("text").value="ここをクリックしてなにかを入力して開始"
+  let started=false;
+  let before="";
+  function main() {
+    if(!started) {
+      if(document.getElementById("text").value!="ここをクリックしてなにかを入力して開始") {
+        started=true;
+        document.getElementById("text").value="_"
+      }
+    }else{
+      document.getElementById("progress").value=progress/hiragana.length
+      if(progress>hiragana.length) {
+        alert("終了！！")
+        return 0;
+      }
+      if(hiragana[progress]=="!-----------!") {
+        progress++;
+      }
+      if(hiragana[progress]=="") {
+        progress++;
+      }
+      document.getElementById("music").textContent=hiragana[progress]
+      document.getElementById("kanji_music").textContent=kanji[progress]
+      if(document.getElementById("text").value!="_"+before) {
+        let input=document.getElementById("text").value.replace(/_/, "");
+        if(input!="") {
+          if(before+"\n"==input) {
+            document.getElementById("youtyped").textContent=input
+            if(hiragana[progress]+"\n"==input) {
+              progress++;
+              document.getElementById("youtyped").style.color="black"
+            }else{
+              document.getElementById("youtyped").style.color="red"
+            }
+            before=""
+            document.getElementById("text").value="_"
+          }else{
+            before=input
+          }
+          
+        }
+      }
+      document.getElementById("text").value="_"+before
+    }
+    requestAnimationFrame(main)
+  }
+  requestAnimationFrame(main)
+}
+
+
+
+
+
+
+  </script>
+</head>
+<body>
+  <textarea id="text" style="min-width: 98vw; min-height: 30vh;"></textarea>
+  <h4 id="youtyped"></h4>
+  <h1 id="kanji_music">漢字</h1>
+  <h3 id="music"      >ひらがな</h3>
+  <progress id="progress" max="1" value="0"></progress>
+  <br>
+  <input type="file" id="hiragana">曲
+  <br>
+  <input type="file" id="kanji">曲(漢字)
+</body>
+</html>
