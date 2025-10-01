@@ -9,7 +9,7 @@ window.onload = function() {
 
   const hardmode=true;
 
-  const r=hardmode? /\[[^\[\]]+\]/g:/\([^\(\)]+\)/g
+  const r=hardmode? /\([^\(\)]+\)/g:/\[[^\[\]]+\]/g
   const r2=hardmode? /[\[\]]/g:/[\(\)]/g
   let progress=0
   let hiragana=[];
