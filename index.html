@@ -56,6 +56,8 @@ window.onload = function() {
       }
     }else{
       document.getElementById("progress").value=progress/hiragana.length
+      let t=(Date.now()-time)/1000;
+      document.getElementById("time").textContent=Math.floor(t/60)+"分"+t%60+"秒";
       if(progress>=hiragana.length) {
         alert("終了！！ time:"+((Date.now()-time)/1000))
         return 0;
@@ -103,6 +105,7 @@ window.onload = function() {
 </head>
 <body>
   <textarea id="text" style="min-width: 98vw; min-height: 10vh;"></textarea>
+  <h4 id="time">0分0秒</h4>
   <h4 id="youtyped"></h4>
   <h1 id="kanji_music">漢字</h1>
   <h3 id="music"      >ひらがな</h3>
