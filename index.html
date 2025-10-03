@@ -8,7 +8,7 @@
 window.onload = function() {
 
   const hardmode=true;
-
+  let time=0;
   const r=hardmode? /\([^\(\)]+\)/g:/\[[^\[\]]+\]/g
   const r2=hardmode? /[\[\]]/g:/[\(\)]/g
   let progress=0
@@ -52,11 +52,12 @@ window.onload = function() {
       if(document.getElementById("text").value!="ここをクリックしてなにかを入力して開始") {
         started=true;
         document.getElementById("text").value="_"
+        time=Date.now()
       }
     }else{
       document.getElementById("progress").value=progress/hiragana.length
       if(progress>hiragana.length) {
-        alert("終了！！")
+        alert("終了！！ time:"+((Date.now()-time)/1000))
         return 0;
       }
       if(hiragana[progress]=="!-----------!") {
